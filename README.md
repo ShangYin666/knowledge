@@ -1,6 +1,4 @@
 # 算法与数据结构学习笔记
-- 1_dynamic_array : 动态数组
-- 2_linked_list_single : 动态数组
-- 4_linked_list_ring : 动态数组
-- 3_linked_list_doubly : 动态数组
-- 5_stack : 栈
+- [1_dynamic_array](https://github.com/ShangYin666/data_structer/blob/master/_1_dynamic_array/README.md)：动态数组
+- [2_linked_list_single](https://github.com/ShangYin666/data_structer/blob/master/2_linked_list_single/README.md)：单链表
+
