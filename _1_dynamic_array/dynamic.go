@@ -3,12 +3,14 @@ package dynamicarray
 import (
 	"fmt"
 	"strings"
+	"sync"
 )
 
 // DynamicArray 动态数组
 type DynamicArray struct {
-	len  int
-	data []interface{}
+	len   int
+	data  []interface{}
+	mutex sync.RWMutex
 }
 
 const (
@@ -55,6 +57,8 @@ func (d *DynamicArray) AddTail(element interface{}) {
 
 // Add 数组中添加元素
 func (d *DynamicArray) Add(index int, element interface{}) {
+	d.mutex.Lock()
+	defer d.mutex.Unlock()
 	d.rangeCheckForAdd(index)
 	// 当数组的长度和容量相等时候需要考虑扩容问题
 	if d.GetCapacity() == d.len {
@@ -134,7 +138,7 @@ func (d *DynamicArray) IndexOf(element interface{}) int {
 	}
 	return ElementNotFound
 }
-func (d DynamicArray) outOfBounds() {
+func (d *DynamicArray) outOfBounds() {
 	panic("out of range")
 }
 func (d *DynamicArray) rangeCheck(index int) {

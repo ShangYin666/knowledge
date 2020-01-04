@@ -2,7 +2,9 @@ package dynamicarray
 
 import (
 	"fmt"
+	"sync"
 	"testing"
+	"time"
 )
 
 var dynamicArray = NewDynamicArray(10)
@@ -13,9 +15,20 @@ func TestDynamicArray_Add(t *testing.T) {
 }
 
 func TestDynamicArray_AddFirst(t *testing.T) {
-	dynamicArray.AddFirst(1)
-	dynamicArray.AddFirst(2)
-	dynamicArray.Print()
+	t1 := time.Now()
+	goroutineNum := 100_000
+	var wg sync.WaitGroup
+
+	for i := 0; i < goroutineNum; i++ {
+		wg.Add(1)
+		go func(ii int) {
+			defer wg.Done()
+			dynamicArray.AddFirst(ii)
+		}(i)
+	}
+	wg.Wait()
+	fmt.Println(dynamicArray.GetSize(), time.Since(t1).Seconds())
+	//dynamicArray.Print()
 }
 
 func TestDynamicArray_AddTail(t *testing.T) {
